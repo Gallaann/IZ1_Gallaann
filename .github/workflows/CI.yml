@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main,dev]
+  pull_request:
+    branches: [main,dev]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install gtest
+        run: sudo apt install libgtest-dev lcov
+
+      - name: build
+        run: cmake -B ./build
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install gtest
+        run: sudo apt install libgtest-dev lcov
+
+      - name: build
+        run: cmake -Dtest=true -B ./build
+
+      - name: make
+        run: cmake --build ./build
+
+      - name: run-tests
+        run: ./build/gtests/gtests
+      
+      - name: get-stats
+        run: lcov -t "tests" -o coverage.info -c -d . && genhtml -o report coverage.info
+        
+      - name: generate-coverage-html
+        run: genhtml coverage.info --output-directory=coverage-output  
+
+  valgrind:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install gtest
+        run: sudo apt install libgtest-dev
+
+      - name: install valgrind
+        run: sudo apt install valgrind
+
+      - name: build
+        run: cmake -Dtest=true -B ./build
+
+      - name: make
+        run: cmake --build ./build
+
+      - name: run-tests
+        run: valgrind ./build/gtests/gtests
+
+  sanitaizer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install gtest
+        run: sudo apt install libgtest-dev lcov
+
+      - name: build
+        run: cmake -Dsanitaizer_test=true -B ./build
+
+      - name: run
+        run: cmake --build ./build
