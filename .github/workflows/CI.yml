@@ -56,6 +56,9 @@ jobs:
         run: sudo apt install libgtest-dev
 
       - name: install valgrind
+        run: sudo snap install valgrind
+        
+      - name: install valgrind
         run: sudo snap install valgrind --сlassic
 
       - name: build
