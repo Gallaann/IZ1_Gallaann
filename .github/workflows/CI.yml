@@ -56,7 +56,7 @@ jobs:
         run: sudo apt install libgtest-dev
 
       - name: install valgrind
-        run: sudo snap install valgrind # version 3.18.1
+        run: sudo snap install valgrind # version 3.18.1 --сlassic
 
       - name: build
         run: cmake -Dtest=true -B ./build
