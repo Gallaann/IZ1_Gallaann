@@ -57,9 +57,7 @@ jobs:
 
       - name: install valgrind
         run: sudo snap install valgrind
-        
-      - name: install valgrind
-        run: sudo snap install valgrind --сlassic
+             sudo snap install valgrind --сlassic
 
       - name: build
         run: cmake -Dtest=true -B ./build
