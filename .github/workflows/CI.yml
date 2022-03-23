@@ -56,7 +56,7 @@ jobs:
         run: sudo apt install libgtest-dev
 
       - name: install valgrind
-        run: sudo apt-get install valgrind
+        run: sudo apt-get install valgrind --fix-missing
 
       - name: build
         run: cmake -Dtest=true -B ./build
