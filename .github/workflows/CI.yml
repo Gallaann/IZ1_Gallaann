@@ -55,11 +55,11 @@ jobs:
       - name: install gtest
         run: sudo apt install libgtest-dev
 
-      - name: sudo update
+      - name: update
         run: sudo apt-get update
 
       - name: install valgrind
-        run sudo apt-get install valgrind
+        run: sudo apt-get install valgrind
 
       - name: build
         run: cmake -Dtest=true -B ./build
